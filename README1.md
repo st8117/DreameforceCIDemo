@@ -1,58 +1,36 @@
-# Salesforce App
-
-This guide helps Salesforce developers who are new to Visual Studio Code go from zero to a deployed app using Salesforce Extensions for VS Code and Salesforce CLI.
-
-## Part 1: Choosing a Development Model
-
-There are two types of developer processes or models supported in Salesforce Extensions for VS Code and Salesforce CLI. These models are explained below. Each model offers pros and cons and is fully supported.
-
-### Package Development Model
-
-The package development model allows you to create self-contained applications or libraries that are deployed to your org as a single package. These packages are typically developed against source-tracked orgs called scratch orgs. This development model is geared toward a more modern type of software development process that uses org source tracking, source control, and continuous integration and deployment.
-
-If you are starting a new project, we recommend that you consider the package development model. To start developing with this model in Visual Studio Code, see [Package Development Model with VS Code](https://forcedotcom.github.io/salesforcedx-vscode/articles/user-guide/package-development-model). For details about the model, see the [Package Development Model](https://trailhead.salesforce.com/en/content/learn/modules/sfdx_dev_model) Trailhead module.
-
-If you are developing against scratch orgs, use the command `SFDX: Create Project` (VS Code) or `sfdx force:project:create` (Salesforce CLI)  to create your project. If you used another command, you might want to start over with that command.
-
-When working with source-tracked orgs, use the commands `SFDX: Push Source to Org` (VS Code) or `sfdx force:source:push` (Salesforce CLI) and `SFDX: Pull Source from Org` (VS Code) or `sfdx force:source:pull` (Salesforce CLI). Do not use the `Retrieve` and `Deploy` commands with scratch orgs.
-
-### Org Development Model
-
-The org development model allows you to connect directly to a non-source-tracked org (sandbox, Developer Edition (DE) org, Trailhead Playground, or even a production org) to retrieve and deploy code directly. This model is similar to the type of development you have done in the past using tools such as Force.com IDE or MavensMate.
-
-To start developing with this model in Visual Studio Code, see [Org Development Model with VS Code](https://forcedotcom.github.io/salesforcedx-vscode/articles/user-guide/org-development-model). For details about the model, see the [Org Development Model](https://trailhead.salesforce.com/content/learn/modules/org-development-model) Trailhead module.
-
-If you are developing against non-source-tracked orgs, use the command `SFDX: Create Project with Manifest` (VS Code) or `sfdx force:project:create --manifest` (Salesforce CLI) to create your project. If you used another command, you might want to start over with this command to create a Salesforce DX project.
-
-When working with non-source-tracked orgs, use the commands `SFDX: Deploy Source to Org` (VS Code) or `sfdx force:source:deploy` (Salesforce CLI) and `SFDX: Retrieve Source from Org` (VS Code) or `sfdx force:source:retrieve` (Salesforce CLI). The `Push` and `Pull` commands work only on orgs with source tracking (scratch orgs).
-
-## The `sfdx-project.json` File
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-The most important parts of this file for getting started are the `sfdcLoginUrl` and `packageDirectories` properties.
-
-The `sfdcLoginUrl` specifies the default login URL to use when authorizing an org.
-
-The `packageDirectories` filepath tells VS Code and Salesforce CLI where the metadata files for your project are stored. You need at least one package directory set in your file. The default setting is shown below. If you set the value of the `packageDirectories` property called `path` to `force-app`, by default your metadata goes in the `force-app` directory. If you want to change that directory to something like `src`, simply change the `path` value and make sure the directory you’re pointing to exists.
-
-```json
-"packageDirectories" : [
-    {
-      "path": "force-app",
-      "default": true
-    }
-]
-```
-
-## Part 2: Working with Source
-
-For details about developing against scratch orgs, see the [Package Development Model](https://trailhead.salesforce.com/en/content/learn/modules/sfdx_dev_model) module on Trailhead or [Package Development Model with VS Code](https://forcedotcom.github.io/salesforcedx-vscode/articles/user-guide/package-development-model).
-
-For details about developing against orgs that don’t have source tracking, see the [Org Development Model](https://trailhead.salesforce.com/content/learn/modules/org-development-model) module on Trailhead or [Org Development Model with VS Code](https://forcedotcom.github.io/salesforcedx-vscode/articles/user-guide/org-development-model).
-
-## Part 3: Deploying to Production
-
-Don’t deploy your code to production directly from Visual Studio Code. The deploy and retrieve commands do not support transactional operations, which means that a deployment can fail in a partial state. Also, the deploy and retrieve commands don’t run the tests needed for production deployments. The push and pull commands are disabled for orgs that don’t have source tracking, including production orgs.
-
-Deploy your changes to production using [packaging](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_dev2gp.htm) or by [converting your source](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_force_source.htm#cli_reference_convert) into metadata format and using the [metadata deploy command](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_force_mdapi.htm#cli_reference_deploy).
+2:在本地进入到上边儿工程文件夹进行初期化前提是本地安装了git											git config user.email
+	echo "# DF-2018-Demo" >> README.md										
+	git init										
+	git add --all										
+	git commit -m "first111 commit"										
+	git remote add origin https://github.com/st8117/DF-2018-Demo.git										#git remote add origin [YOUR NEW .GIT URL] # 将新源地址写入本地版本库配置文件
+	git push -u origin master										
+3:用VS打开工程		提前安装SFDX									
+4:关联你的开发环境，为创建Scrach环境做准备				SFDX:Set a default org				确保打开了DevHub功能			
+05:创建Scratch环境				SFDX:Set a default scratchorg				Scratch org 可以设置有效期			
+6:Push source to default scrach org											
+7:Set UP CI											
+ 	1:打开CI 点击Add project										
+	2:选择刚刚创建的Gitbub 库										
+	3:Build Project -》Hello world										
+8:操作Git把CI传递给Git的config文件Merge到Git仓库里。											
+9:在https://github.com/st8117/DreameforceCIDemo/tree/master/build里下载build文件夹通过VS上传到Git上去。											
+10:从上边git里找到CI Config文件，并且拷贝里边儿的内容到自己工程的Config文件里，并且仔细看一下，这个Config文件和build文件夹											
+11:在CI的本工程的目录里，点击右上角的齿轮，进入到设定画面，进行CI的环境变量设定，这里也就是SFDC里的APPConnect的参数设定地方，											
+12:在Salesforce里设定APPConnect,我们需要把【Consumer Key】和【digital signatures】设置到CircleCI里边儿去。											
+	【digital signatures】的生成方法										
+		使用Build文件夹里的。执行.generate-keys.sh									
+		Country code:cn									
+		Province:ln									
+		city:dl									
+		orgname:test									
+		sectionname:01									
+		HostName:test01									
+		Password:Passw0rd									
+13:在Circle CI的环境变量里设定以下参数											
+	SFDC_SERVER_KEY = key file for certificate base64 encoded										
+	SFDC_PROD_CLIENTID=connect app client id for product										
+	SFDC_PROD_USER										
+14:把Build文件夹下生成的，server.crt上传到ConnectApp里 .appconnect 里的授权登陆方式选择，预授权，并且把自己用户的Profile设置上，否则CI登陆不了。											
+15:选择CircleCi的，Job菜单											
+16:接下来可以测试一下了。											
